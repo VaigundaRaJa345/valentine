@@ -55,23 +55,38 @@ export function Confession() {
                             transition={{ delay: 0.3, duration: 0.8 }}
                         >
                             <div className="text-center space-y-8">
-                                <h2 className="font-handwriting text-6xl md:text-7xl text-primary mb-6">
-                                    I Like You
+                                <h2 className="font-handwriting text-5xl md:text-6xl text-primary mb-6">
+                                    Not a Proposal
                                 </h2>
 
-                                <p className="text-xl md:text-2xl font-serif text-ink italic leading-relaxed">
-                                    "In a world of digital noise,<br />
-                                    you are my favorite timeless melody."
-                                </p>
-
-                                <div className="pt-8 flex justify-center">
-                                    <div className="w-32 h-[1px] bg-ink/20" />
+                                <div className="text-lg md:text-xl font-serif text-ink italic leading-relaxed space-y-4">
+                                    <p>Hii,</p>
+                                    <p>First thing idhu onnu proposal illa, I want to tell you something.</p>
+                                    <p>Yeah, it started with a glance… 2016 June 🕢<br />
+                                        I’m still stuck with that cute little girl 🌝 sitting in the corner of the class, in the last row.</p>
+                                    <p>Okay, past things apart, naanum ethana naal dhaan sollama irukkuradhu.<br />
+                                        Nee committed aa, single aa nu therila.<br />
+                                        Idha sollalama, solla koodaadha nu kooda therila 🤷</p>
+                                    <p>Unna paatha first day la irundhu I’m struck with you, that’s it.<br />
+                                        I just like you girl, avalodha.</p>
                                 </div>
+
+                                <div className="w-32 h-[1px] bg-ink/20" />
+                            </div>
+
+                            <div className="flex justify-center mt-8">
+                                <button
+                                    onClick={() => window.open("https://www.instagram.com/astro_raja03/", "_blank")}
+                                    className="px-8 py-3 bg-primary text-[#f4e4bc] font-serif text-xl rounded-full hover:bg-[#8e6370] transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1 duration-300 flex items-center gap-2"
+                                >
+                                    <span>Thanks</span>
+                                    <span className="text-sm">↗</span>
+                                </button>
                             </div>
                         </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
-        </section>
+        </section >
     );
 }
