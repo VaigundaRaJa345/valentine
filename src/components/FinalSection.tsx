@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Twitter } from "lucide-react";
+import { Instagram } from "lucide-react";
 
 export function FinalSection() {
     return (
@@ -22,11 +22,14 @@ export function FinalSection() {
             </motion.div>
 
             <div className="mt-12 flex space-x-6 z-10 opacity-50 hover:opacity-100 transition-opacity duration-300">
-                <a href="#" className="text-ink hover:text-primary transition-colors">
-                    <Twitter size={18} />
-                </a>
-                <a href="#" className="text-ink hover:text-primary transition-colors">
-                    <Github size={18} />
+                <a
+                    href="https://www.instagram.com/astro_raja03/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-ink hover:text-primary transition-colors hover:scale-110 transform duration-300"
+                    aria-label="Instagram"
+                >
+                    <Instagram size={24} />
                 </a>
             </div>
         </footer>

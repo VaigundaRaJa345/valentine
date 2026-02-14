@@ -12,10 +12,10 @@ export function Hero() {
                 initial={{ rotate: -5, x: -100, opacity: 0 }}
                 animate={{ rotate: -5, x: 0, opacity: 1 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
-                className="absolute top-20 left-10 md:left-32 w-48 h-64 bg-paper shadow-lg border border-stone-300 p-4 transform -rotate-6 z-0 hidden md:block"
+                className="absolute top-20 left-10 md:left-32 w-48 h-64 bg-paper shadow-lg border border-[#dcd0ff] p-4 transform -rotate-6 z-0 hidden md:block"
             >
-                <div className="w-full h-full border-2 border-dashed border-stone-300 flex items-center justify-center opacity-50">
-                    <span className="font-handwriting text-2xl text-ink/40">Feb 14</span>
+                <div className="w-full h-full border-2 border-dashed border-[#967bb6] flex items-center justify-center opacity-50">
+                    <span className="font-handwriting text-2xl text-[#7c525f]">Feb 14</span>
                 </div>
             </motion.div>
 
@@ -23,12 +23,12 @@ export function Hero() {
                 initial={{ rotate: 10, x: 100, opacity: 0 }}
                 animate={{ rotate: 10, x: 0, opacity: 1 }}
                 transition={{ duration: 1.5, delay: 0.3, ease: "easeOut" }}
-                className="absolute bottom-32 right-10 md:right-32 w-56 h-40 bg-[#f0e6d2] shadow-xl p-2 transform rotate-12 z-0 hidden md:block"
+                className="absolute bottom-32 right-10 md:right-32 w-56 h-40 bg-[#e6cece] shadow-xl p-2 transform rotate-12 z-0 hidden md:block"
             >
-                <div className="w-full h-full border border-stone-400 flex items-center justify-center">
+                <div className="w-full h-full border border-[#7c525f] flex items-center justify-center">
                     {/* Placeholder for a vintage stamp or image */}
-                    <div className="w-16 h-16 rounded-full border border-ink/20 flex items-center justify-center">
-                        <div className="w-12 h-12 rounded-full border border-ink/40" />
+                    <div className="w-16 h-16 rounded-full border border-[#7c525f]/20 flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-full border border-[#7c525f]/40 bg-[#b08d55]/10" />
                     </div>
                 </div>
             </motion.div>
