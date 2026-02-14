@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 
 export function Confession() {
     const [isRevealed, setIsRevealed] = useState(false);
@@ -48,6 +49,18 @@ export function Confession() {
                     >
                         {/* Paper Texture Overlay for message */}
                         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-50 mix-blend-multiply pointer-events-none" />
+
+                        {/* Close Button */}
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setIsRevealed(false);
+                            }}
+                            className="absolute top-6 right-6 text-ink/40 hover:text-primary transition-colors p-2 z-10"
+                            aria-label="Close letter"
+                        >
+                            <X size={24} />
+                        </button>
 
                         <motion.div
                             initial={{ scale: 0.9, opacity: 0 }}
