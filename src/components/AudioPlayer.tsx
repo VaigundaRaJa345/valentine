@@ -10,9 +10,28 @@ export function AudioPlayer() {
 
     useEffect(() => {
         // Initialize audio
-        audioRef.current = new Audio("/audio/background.mp3");
-        audioRef.current.loop = true;
-        audioRef.current.volume = 0.5;
+        const audio = new Audio("/audio/background.mp3");
+        audio.loop = true;
+        audio.volume = 0.5;
+        audioRef.current = audio;
+
+        // Attempt to play automatically
+        const playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                setIsPlaying(true);
+            }).catch((error) => {
+                console.log("Autoplay prevented by browser, waiting for interaction.");
+                // Add a one-time click listener to start audio
+                const enableAudio = () => {
+                    audio.play();
+                    setIsPlaying(true);
+                    document.removeEventListener('click', enableAudio);
+                };
+                document.addEventListener('click', enableAudio);
+            });
+        }
 
         return () => {
             if (audioRef.current) {
@@ -26,12 +45,14 @@ export function AudioPlayer() {
         if (audioRef.current) {
             if (isPlaying) {
                 audioRef.current.pause();
+                setIsPlaying(false);
             } else {
-                audioRef.current.play().catch((err) => {
+                audioRef.current.play().then(() => {
+                    setIsPlaying(true);
+                }).catch((err) => {
                     console.error("Audio playback failed:", err);
                 });
             }
-            setIsPlaying(!isPlaying);
         }
     };
 
