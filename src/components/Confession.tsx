@@ -74,6 +74,7 @@ export function Confession() {
                                     <p>And, unkitta neraiya sollanum nu thonudhu dhaan, but solla varala 😝<br />
                                         And also, this is not a melting, sad, polambifying message.<br />
                                         I just want to tell things to you…</p>
+                                    <p className="font-handwriting text-3xl md:text-4xl text-primary mt-6">Happy Valentine’s, girl 🤍✨</p>
                                 </div>
 
                                 <div className="w-32 h-[1px] bg-ink/20" />
