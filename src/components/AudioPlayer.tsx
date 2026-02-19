@@ -7,9 +7,9 @@ import { Diary } from "./Diary";
 
 const PLAYLIST = [
     { title: "Ordinary", src: "/audio/ordinary.mp3", caption: "Because with you, nothing is ordinary." },
-    { title: "Theethiriyaai", src: "/audio/theethiriyaai.mp3", caption: "The spark that started it all." },
-    { title: "Nallaru Po", src: "/audio/nallaru_po.mp3", caption: "A melody for you." },
-    { title: "Theme", src: "/audio/background.mp3", caption: "Our timeless background." },
+    { title: "Theethiriyaai", src: "/audio/theethiriyaai.mp3", caption: "This is how i fell for you in 7th STD." },
+    { title: "Nallaru Po", src: "/audio/nallaru_po.mp3", caption: "Then, Master the art of \"Watching you from the far\"." },
+    { title: "Mudhal nee mudivum nee", src: "/audio/background.mp3", caption: "My timeless confusion." },
 ];
 
 export function AudioPlayer() {
