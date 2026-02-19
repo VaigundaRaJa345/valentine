@@ -5,9 +5,10 @@ import { Volume2, VolumeX, SkipForward, Shuffle } from "lucide-react";
 import { motion } from "framer-motion";
 
 const PLAYLIST = [
-    { title: "Theme", src: "/audio/background.mp3" },
-    { title: "Melody", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
-    { title: "Harmony", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
+    { title: "Ordinary", src: "/audio/ordinary.mp3", caption: "Because with you, nothing is ordinary." },
+    { title: "Theethiriyaai", src: "/audio/theethiriyaai.mp3", caption: "The spark that started it all." },
+    { title: "Nallaru Po", src: "/audio/nallaru_po.mp3", caption: "A melody for you." },
+    { title: "Theme", src: "/audio/background.mp3", caption: "Our timeless background." },
 ];
 
 export function AudioPlayer() {
@@ -91,42 +92,55 @@ export function AudioPlayer() {
     };
 
     return (
-        <div className="fixed top-6 right-6 z-50 flex items-center gap-2">
-            <motion.button
+        <div className="fixed top-6 right-6 z-50 flex items-center gap-4">
+            <motion.div
+                key={currentTrackIndex}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8 }}
-                onClick={randomTrack}
-                className="p-3 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-foreground hover:bg-white/10 transition-colors"
-                aria-label="Random song"
-                title="Random Song"
+                exit={{ opacity: 0, x: -20 }}
+                className="hidden md:block bg-white/5 backdrop-blur-sm border border-white/10 px-4 py-2 rounded-full text-sm text-white/90 whitespace-nowrap"
             >
-                <Shuffle size={20} />
-            </motion.button>
+                <span className="font-medium mr-2">Now Playing:</span>
+                <span className="italic">{PLAYLIST[currentTrackIndex].caption}</span>
+            </motion.div>
 
-            <motion.button
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.9 }}
-                onClick={nextTrack}
-                className="p-3 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-foreground hover:bg-white/10 transition-colors"
-                aria-label="Next song"
-                title="Next Song"
-            >
-                <SkipForward size={20} />
-            </motion.button>
+            <div className="flex items-center gap-2">
+                <motion.button
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.8 }}
+                    onClick={randomTrack}
+                    className="p-3 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-foreground hover:bg-white/10 transition-colors"
+                    aria-label="Random song"
+                    title="Random Song"
+                >
+                    <Shuffle size={20} />
+                </motion.button>
 
-            <motion.button
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1 }}
-                onClick={togglePlay}
-                className="p-3 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-foreground hover:bg-white/10 transition-colors"
-                aria-label={isPlaying ? "Mute music" : "Play music"}
-                title={isPlaying ? "Pause" : "Play"}
-            >
-                {isPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
-            </motion.button>
+                <motion.button
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.9 }}
+                    onClick={nextTrack}
+                    className="p-3 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-foreground hover:bg-white/10 transition-colors"
+                    aria-label="Next song"
+                    title="Next Song"
+                >
+                    <SkipForward size={20} />
+                </motion.button>
+
+                <motion.button
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1 }}
+                    onClick={togglePlay}
+                    className="p-3 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-foreground hover:bg-white/10 transition-colors"
+                    aria-label={isPlaying ? "Mute music" : "Play music"}
+                    title={isPlaying ? "Pause" : "Play"}
+                >
+                    {isPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
+                </motion.button>
+            </div>
         </div>
     );
 }
