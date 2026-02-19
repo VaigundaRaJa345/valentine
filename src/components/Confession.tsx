@@ -16,52 +16,58 @@ export function Confession() {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        className="relative w-full max-w-lg h-[400px] flex items-center justify-center z-10"
+                        className="relative w-full max-w-lg h-[300px] md:h-[400px] flex items-center justify-center z-10 perspective-1000"
                     >
                         {/* Birthday Envelope (Bottom Stack) */}
                         <motion.div
                             key="envelope-birthday"
-                            initial={{ rotate: -15, x: -20, y: 10 }}
+                            initial={{ rotate: -10, x: -10, y: 10 }}
                             whileHover={{ rotate: -5, scale: 1.05, zIndex: 50, y: -20 }}
-                            className="absolute cursor-pointer group flex flex-col items-center z-10 transition-all duration-300"
+                            whileTap={{ scale: 0.95 }}
+                            className="absolute cursor-pointer group flex flex-col items-center z-10 transition-all duration-300 transform-style-3d"
                             onClick={() => setActiveLetter("birthday")}
                         >
-                            <div className="w-72 h-48 bg-[#f4e4bc] shadow-xl relative flex items-center justify-center rounded-sm border border-[#d4c5a5]">
+                            <div className="w-64 h-44 md:w-72 md:h-48 bg-[#f4e4bc] shadow-xl relative flex items-center justify-center rounded-sm border border-[#d4c5a5]">
                                 {/* Paper Texture */}
                                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-30 mix-blend-multiply" />
                                 <div className="absolute inset-0 border-2 border-[#885A89] m-2 border-dashed opacity-30" />
 
+                                {/* Label on Envelope */}
+                                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-max bg-white/60 backdrop-blur-[2px] px-3 py-1 rounded-sm border border-[#d4c5a5]/50 group-hover:bg-white/90 transition-colors">
+                                    <p className="font-serif text-ink/70 tracking-widest text-[10px] uppercase">Birthday Wish</p>
+                                </div>
+
                                 {/* Wax Seal */}
-                                <div className="w-14 h-14 rounded-full bg-[#B08D55] shadow-md flex items-center justify-center z-20 border-2 border-[#f4e4bc]/30 relative">
-                                    <Gift size={20} className="text-[#f4e4bc]" />
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#B08D55] shadow-md flex items-center justify-center z-20 border-2 border-[#f4e4bc]/30">
+                                    <Gift size={18} className="text-[#f4e4bc]" />
                                 </div>
                             </div>
-                            <p className="mt-4 font-serif text-ink/60 tracking-widest text-xs uppercase bg-white/80 backdrop-blur-sm px-2 py-1 rounded-sm shadow-sm group-hover:text-secondary transition-colors">
-                                Birthday Wish
-                            </p>
                         </motion.div>
 
                         {/* Confession Envelope (Top Stack) */}
                         <motion.div
                             key="envelope-confession"
-                            initial={{ rotate: 5, x: 20, y: -10 }}
+                            initial={{ rotate: 5, x: 10, y: -10 }}
                             whileHover={{ rotate: 0, scale: 1.05, zIndex: 50, y: -30 }}
-                            className="absolute cursor-pointer group flex flex-col items-center z-20 transition-all duration-300"
+                            whileTap={{ scale: 0.95 }}
+                            className="absolute cursor-pointer group flex flex-col items-center z-20 transition-all duration-300 transform-style-3d"
                             onClick={() => setActiveLetter("confession")}
                         >
-                            <div className="w-72 h-48 bg-[#e6cece] shadow-2xl relative flex items-center justify-center rounded-sm border border-[#dcd0ff]">
+                            <div className="w-64 h-44 md:w-72 md:h-48 bg-[#e6cece] shadow-2xl relative flex items-center justify-center rounded-sm border border-[#dcd0ff]">
                                 {/* Paper Texture */}
                                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-30 mix-blend-multiply" />
                                 <div className="absolute inset-0 border-2 border-[#dcd0ff] m-2 border-dashed opacity-50" />
 
+                                {/* Label on Envelope */}
+                                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-max bg-white/60 backdrop-blur-[2px] px-3 py-1 rounded-sm border border-[#dcd0ff]/50 group-hover:bg-white/90 transition-colors">
+                                    <p className="font-serif text-ink/70 tracking-widest text-[10px] uppercase">A Letter for You</p>
+                                </div>
+
                                 {/* Wax Seal */}
-                                <div className="w-14 h-14 rounded-full bg-[#7c525f] shadow-lg flex items-center justify-center z-20 border-2 border-[#967bb6]/30 relative">
-                                    <div className="text-[#f4e4bc] font-serif text-xl italic">V</div>
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#7c525f] shadow-lg flex items-center justify-center z-20 border-2 border-[#967bb6]/30">
+                                    <div className="text-[#f4e4bc] font-serif text-lg md:text-xl italic">V</div>
                                 </div>
                             </div>
-                            <p className="mt-4 font-serif text-ink/60 tracking-widest text-xs uppercase bg-white/80 backdrop-blur-sm px-2 py-1 rounded-sm shadow-sm group-hover:text-primary transition-colors">
-                                A Letter for You
-                            </p>
                         </motion.div>
                     </motion.div>
                 ) : (
