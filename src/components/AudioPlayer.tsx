@@ -26,9 +26,15 @@ export function AudioPlayer() {
 
         // Initialize audio with random track
         const audio = new Audio(PLAYLIST[randomIndex].src);
-        audio.loop = true;
+        audio.loop = false;
         audio.volume = 0.5;
         audioRef.current = audio;
+
+        // Handle auto-next
+        const handleEnded = () => {
+            setCurrentTrackIndex((prev) => (prev + 1) % PLAYLIST.length);
+        };
+        audio.addEventListener('ended', handleEnded);
 
         // Function to start playing
         const startAudio = () => {
@@ -52,6 +58,7 @@ export function AudioPlayer() {
             document.removeEventListener('scroll', startAudio);
             document.removeEventListener('click', startAudio);
             if (audioRef.current) {
+                audioRef.current.removeEventListener('ended', handleEnded);
                 audioRef.current.pause();
                 audioRef.current = null;
             }
@@ -67,7 +74,7 @@ export function AudioPlayer() {
                 audioRef.current.play().catch(e => console.error("Playback failed:", e));
             }
         }
-    }, [currentTrackIndex]);
+    }, [currentTrackIndex, isPlaying]); // Added isPlaying dependency just in case, though logically mostly depends on index
 
     const togglePlay = () => {
         if (audioRef.current) {
@@ -100,16 +107,7 @@ export function AudioPlayer() {
             <Diary isOpen={isDiaryOpen} onClose={() => setIsDiaryOpen(false)} />
 
             <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 w-max">
-                <motion.div
-                    key={currentTrackIndex}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="bg-black/40 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full text-xs md:text-sm text-amber-200 whitespace-normal md:whitespace-nowrap text-center mb-2 shadow-lg max-w-[90vw]"
-                >
-                    <span className="font-medium mr-2 text-white/80">Now Playing:</span>
-                    <span className="italic">{PLAYLIST[currentTrackIndex].caption}</span>
-                </motion.div>
+                {/* Now Playing removed */}
 
                 <div className="flex items-center gap-2 p-2 bg-black/30 backdrop-blur-md rounded-full border border-white/10 shadow-2xl relative">
                     <AnimatePresence>
