@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Volume2, VolumeX, SkipForward, ListMusic } from "lucide-react";
+import { Volume2, VolumeX, SkipForward, ListMusic, BookOpen } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Diary } from "./Diary";
 
 const PLAYLIST = [
     { title: "Ordinary", src: "/audio/ordinary.mp3", caption: "Because with you, nothing is ordinary." },
@@ -15,6 +16,7 @@ export function AudioPlayer() {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
     const [isPlaylistOpen, setIsPlaylistOpen] = useState(false);
+    const [isDiaryOpen, setIsDiaryOpen] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
@@ -90,78 +92,96 @@ export function AudioPlayer() {
     };
 
     return (
-        <div className="fixed top-6 right-6 z-50 flex items-center gap-4">
-            <motion.div
-                key={currentTrackIndex}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                className="hidden md:block bg-white/5 backdrop-blur-sm border border-white/10 px-4 py-2 rounded-full text-sm text-amber-200 whitespace-nowrap"
-            >
-                <span className="font-medium mr-2 text-white/80">Now Playing:</span>
-                <span className="italic">{PLAYLIST[currentTrackIndex].caption}</span>
-            </motion.div>
+        <>
+            <Diary isOpen={isDiaryOpen} onClose={() => setIsDiaryOpen(false)} />
 
-            <AnimatePresence>
-                {isPlaylistOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                        className="absolute top-14 right-0 w-48 bg-black/80 backdrop-blur-md rounded-xl border border-white/10 overflow-hidden shadow-xl"
-                    >
-                        {PLAYLIST.map((track, index) => (
-                            <button
-                                key={index}
-                                onClick={() => selectTrack(index)}
-                                className={`w-full text-left px-4 py-3 text-sm transition-colors hover:bg-white/10 ${currentTrackIndex === index ? "text-amber-200 font-medium bg-white/5" : "text-white/80"
-                                    }`}
+            <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 w-max">
+                <motion.div
+                    key={currentTrackIndex}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="hidden md:block bg-black/40 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full text-sm text-amber-200 whitespace-nowrap mb-2 shadow-lg"
+                >
+                    <span className="font-medium mr-2 text-white/80">Now Playing:</span>
+                    <span className="italic">{PLAYLIST[currentTrackIndex].caption}</span>
+                </motion.div>
+
+                <div className="flex items-center gap-2 p-2 bg-black/30 backdrop-blur-md rounded-full border border-white/10 shadow-2xl relative">
+                    <AnimatePresence>
+                        {isPlaylistOpen && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                className="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 w-48 bg-black/90 backdrop-blur-xl rounded-xl border border-white/10 overflow-hidden shadow-2xl"
                             >
-                                {track.title}
-                            </button>
-                        ))}
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                                {PLAYLIST.map((track, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => selectTrack(index)}
+                                        className={`w-full text-left px-4 py-3 text-sm transition-colors hover:bg-white/10 ${currentTrackIndex === index ? "text-amber-200 font-medium bg-white/5" : "text-white/80"
+                                            }`}
+                                    >
+                                        {track.title}
+                                    </button>
+                                ))}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
-            <div className="flex items-center gap-2">
-                <motion.button
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.8 }}
-                    onClick={() => setIsPlaylistOpen(!isPlaylistOpen)}
-                    className={`p-3 rounded-full backdrop-blur-sm border border-white/10 text-foreground transition-colors ${isPlaylistOpen ? "bg-white/20" : "bg-white/5 hover:bg-white/10"
-                        }`}
-                    aria-label="Playlist"
-                    title="Playlist"
-                >
-                    <ListMusic size={20} />
-                </motion.button>
+                    <motion.button
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.7 }}
+                        onClick={() => setIsDiaryOpen(true)}
+                        className="p-3 rounded-full bg-white/5 hover:bg-white/20 text-amber-100 transition-colors border border-white/5"
+                        aria-label="Open Diary"
+                        title="Open Diary"
+                    >
+                        <BookOpen size={20} />
+                    </motion.button>
 
-                <motion.button
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.9 }}
-                    onClick={nextTrack}
-                    className="p-3 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-foreground hover:bg-white/10 transition-colors"
-                    aria-label="Next song"
-                    title="Next Song"
-                >
-                    <SkipForward size={20} />
-                </motion.button>
+                    <div className="w-px h-6 bg-white/10 mx-1"></div>
 
-                <motion.button
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1 }}
-                    onClick={togglePlay}
-                    className="p-3 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-foreground hover:bg-white/10 transition-colors"
-                    aria-label={isPlaying ? "Mute music" : "Play music"}
-                    title={isPlaying ? "Pause" : "Play"}
-                >
-                    {isPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
-                </motion.button>
+                    <motion.button
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.8 }}
+                        onClick={() => setIsPlaylistOpen(!isPlaylistOpen)}
+                        className={`p-3 rounded-full border border-white/5 text-foreground transition-colors ${isPlaylistOpen ? "bg-white/20 text-white" : "bg-white/5 hover:bg-white/20 text-white/90"
+                            }`}
+                        aria-label="Playlist"
+                        title="Playlist"
+                    >
+                        <ListMusic size={20} />
+                    </motion.button>
+
+                    <motion.button
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.9 }}
+                        onClick={nextTrack}
+                        className="p-3 rounded-full bg-white/5 border border-white/5 text-white/90 hover:bg-white/20 transition-colors"
+                        aria-label="Next song"
+                        title="Next Song"
+                    >
+                        <SkipForward size={20} />
+                    </motion.button>
+
+                    <motion.button
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 1 }}
+                        onClick={togglePlay}
+                        className="p-3 rounded-full bg-white/10 border border-white/10 text-white hover:bg-white/25 transition-colors shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+                        aria-label={isPlaying ? "Mute music" : "Play music"}
+                        title={isPlaying ? "Pause" : "Play"}
+                    >
+                        {isPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
+                    </motion.button>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
