@@ -101,7 +101,7 @@ export function AudioPlayer() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    className="hidden md:block bg-black/40 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full text-sm text-amber-200 whitespace-nowrap mb-2 shadow-lg"
+                    className="bg-black/40 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full text-xs md:text-sm text-amber-200 whitespace-normal md:whitespace-nowrap text-center mb-2 shadow-lg max-w-[90vw]"
                 >
                     <span className="font-medium mr-2 text-white/80">Now Playing:</span>
                     <span className="italic">{PLAYLIST[currentTrackIndex].caption}</span>
