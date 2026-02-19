@@ -3,109 +3,137 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { X } from "lucide-react";
+import { X, Heart, Gift } from "lucide-react";
 
 export function Confession() {
-    const [isRevealed, setIsRevealed] = useState(false);
+    const [activeLetter, setActiveLetter] = useState<"confession" | "birthday" | null>(null);
 
     return (
-        <section className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
+        <section className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden space-y-8">
 
             <AnimatePresence mode="wait">
-                {!isRevealed ? (
+                {activeLetter === null ? (
                     <motion.div
-                        key="envelope"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, y: 100, transition: { duration: 0.5 } }}
-                        className="relative cursor-pointer group"
-                        onClick={() => setIsRevealed(true)}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        className="flex flex-col md:flex-row gap-8 md:gap-16 items-center justify-center z-10"
                     >
-                        {/* Vintage Envelope */}
-                        <div className="w-80 h-52 bg-[#e6cece] shadow-2xl relative flex items-center justify-center transform transition-transform group-hover:scale-105 duration-500 rounded-sm">
-                            <div className="absolute inset-0 border-2 border-[#dcd0ff] m-2 border-dashed opacity-50" />
+                        {/* Confession Envelope */}
+                        <motion.div
+                            key="envelope-confession"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="relative cursor-pointer group flex flex-col items-center"
+                            onClick={() => setActiveLetter("confession")}
+                        >
+                            <div className="w-72 h-48 bg-[#e6cece] shadow-2xl relative flex items-center justify-center rounded-sm transform transition-all duration-300 hover:shadow-[0_0_30px_rgba(136,90,137,0.3)]">
+                                <div className="absolute inset-0 border-2 border-[#dcd0ff] m-2 border-dashed opacity-50" />
+                                {/* Wax Seal */}
+                                <div className="w-14 h-14 rounded-full bg-[#7c525f] shadow-lg flex items-center justify-center z-20 border-2 border-[#967bb6]/30">
+                                    <div className="text-[#f4e4bc] font-serif text-xl italic">V</div>
+                                </div>
+                            </div>
+                            <p className="mt-6 font-serif text-ink/60 tracking-widest text-xs uppercase group-hover:text-primary transition-colors">
+                                A Letter for You
+                            </p>
+                        </motion.div>
 
-                            {/* Wax Seal with Heartbeat */}
-                            <motion.div
-                                animate={{ scale: [1, 1.1, 1] }}
-                                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                                className="w-16 h-16 rounded-full bg-[#7c525f] shadow-lg flex items-center justify-center z-20 border-4 border-[#967bb6]/30 relative"
-                            >
-                                <div className="text-[#f4e4bc] font-serif text-2xl italic">V</div>
-                            </motion.div>
-                        </div>
-
-                        <p className="mt-8 text-center font-serif text-ink/60 tracking-widest text-sm uppercase group-hover:text-primary transition-colors">
-                            Tap the seal to open
-                        </p>
+                        {/* Birthday Envelope */}
+                        <motion.div
+                            key="envelope-birthday"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="relative cursor-pointer group flex flex-col items-center"
+                            onClick={() => setActiveLetter("birthday")}
+                        >
+                            <div className="w-72 h-48 bg-[#f4e4bc] shadow-2xl relative flex items-center justify-center rounded-sm transform transition-all duration-300 hover:shadow-[0_0_30px_rgba(176,141,85,0.3)]">
+                                <div className="absolute inset-0 border-2 border-[#885A89] m-2 border-dashed opacity-30" />
+                                {/* Wax Seal */}
+                                <div className="w-14 h-14 rounded-full bg-[#B08D55] shadow-lg flex items-center justify-center z-20 border-2 border-[#f4e4bc]/30">
+                                    <Gift size={20} className="text-[#f4e4bc]" />
+                                </div>
+                            </div>
+                            <p className="mt-6 font-serif text-ink/60 tracking-widest text-xs uppercase group-hover:text-secondary transition-colors">
+                                Birthday Wish
+                            </p>
+                        </motion.div>
                     </motion.div>
                 ) : (
                     <motion.div
                         key="message"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 1 }}
-                        className="max-w-2xl bg-paper p-12 md:p-16 shadow-2xl relative transform rotate-1"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.5 }}
+                        className="max-w-2xl w-full bg-paper p-8 md:p-12 shadow-2xl relative transform rotate-1 rounded-sm mx-4"
                     >
-                        {/* Paper Texture Overlay for message */}
+                        {/* Paper Texture Overlay */}
                         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-50 mix-blend-multiply pointer-events-none" />
 
                         {/* Close Button */}
                         <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setIsRevealed(false);
-                            }}
-                            className="absolute top-6 right-6 text-ink/40 hover:text-primary transition-colors p-2 z-10"
+                            onClick={() => setActiveLetter(null)}
+                            className="absolute top-4 right-4 md:top-6 md:right-6 text-ink/40 hover:text-primary transition-colors p-2 z-10"
                             aria-label="Close letter"
                         >
                             <X size={24} />
                         </button>
 
-                        <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ delay: 0.3, duration: 0.8 }}
-                        >
-                            <div className="text-center space-y-8">
-                                <h2 className="font-handwriting text-5xl md:text-6xl text-primary mb-6">
-                                    of course, Not a Proposal
-                                </h2>
+                        {/* Content Container */}
+                        <div className="relative z-10">
+                            {activeLetter === "confession" ? (
+                                <div className="text-center space-y-6 md:space-y-8">
+                                    <h2 className="font-handwriting text-4xl md:text-5xl text-primary mb-2">
+                                        of course, Not a Proposal
+                                    </h2>
 
-                                <div className="text-lg md:text-xl font-serif text-ink italic leading-relaxed space-y-4">
-                                    <p>Hii,</p>
-                                    <p>I want to tell you something.</p>
-                                    <p>Yeah, it started with a glance… back in June 2016 🕢<br />
-                                        I’m still stuck with that cute little girl 🤌 sitting in the corner of the class, in the last row.</p>
-                                    <p>Okay, past things apart, naanum ethana naal dhaan sollama irukkuradhu.<br />
-                                        Nee committed aa, single aa nu therila.<br />
-                                        Idha sollalama, solla koodaadha nu kooda therila 🤷</p>
-                                    <p>Unna paatha first day la irundhu I’m struck with you, girl—that’s it 👊<br />
-                                        I just like you, avalodha.</p>
-                                    <p>And don’t feel down, you have a lot of potential 💯<br />
-                                        Keep growing 💗✨</p>
-                                    <p>And, unkitta neraiya sollanum nu thonudhu dhaan, but ethalam intha message la solradu nu therila 😝<br />
-                                        And also, this is not a melting, sad, polambifing message.<br />
-                                        I just want to tell things to you…</p>
-                                    <p className="font-handwriting text-3xl md:text-4xl text-primary mt-6">Happy Valentine’s, girl 🤍✨</p>
+                                    <div className="text-base md:text-lg font-serif text-ink italic leading-relaxed space-y-4 text-left md:text-center">
+                                        <p>Hii,</p>
+                                        <p>I want to tell you something.</p>
+                                        <p>Yeah, it started with a glance… back in June 2016 🕢<br />
+                                            I’m still stuck with that cute little girl 🤌 sitting in the corner of the class, in the last row.</p>
+                                        <p>Okay, past things apart, naanum ethana naal dhaan sollama irukkuradhu.<br />
+                                            Nee committed aa, single aa nu therila.<br />
+                                            Idha sollalama, solla koodaadha nu kooda therila 🤷</p>
+                                        <p>Unna paatha first day la irundhu I’m struck with you, girl—that’s it 👊<br />
+                                            I just like you, avalodha.</p>
+                                        <p>And don’t feel down, you have a lot of potential 💯<br />
+                                            Keep growing 💗✨</p>
+                                        <p>And, unkitta neraiya sollanum nu thonudhu dhaan, but ethalam intha message la solradu nu therila 😝<br />
+                                            And also, this is not a melting, sad, polambifing message.<br />
+                                            I just want to tell things to you…</p>
+                                        <p className="font-handwriting text-3xl md:text-4xl text-primary mt-6 text-center">Happy Valentine’s, girl 🤍✨</p>
+                                    </div>
+
+                                    <div className="flex justify-center mt-8">
+                                        <button
+                                            onClick={() => window.open("https://www.instagram.com/astro_raja03/", "_blank")}
+                                            className="px-6 py-2 bg-primary text-[#f4e4bc] font-serif text-lg rounded-full hover:bg-[#8e6370] transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1 duration-300 flex items-center gap-2"
+                                        >
+                                            <span>Thanks</span>
+                                            <span className="text-xs">↗</span>
+                                        </button>
+                                    </div>
                                 </div>
+                            ) : (
+                                <div className="text-center space-y-6 md:space-y-8">
+                                    <h2 className="font-handwriting text-4xl md:text-5xl text-secondary mb-2">
+                                        Happy Birthday!
+                                    </h2>
 
-                                <div className="w-32 h-[1px] bg-ink/20" />
-                            </div>
-
-                            <div className="flex justify-center mt-8">
-                                <button
-                                    onClick={() => window.open("https://www.instagram.com/astro_raja03/", "_blank")}
-                                    className="px-8 py-3 bg-primary text-[#f4e4bc] font-serif text-xl rounded-full hover:bg-[#8e6370] transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1 duration-300 flex items-center gap-2"
-                                >
-                                    <span>Thanks</span>
-                                    <span className="text-sm">↗</span>
-                                </button>
-                            </div>
-                        </motion.div>
+                                    <div className="text-base md:text-lg font-serif text-ink italic leading-relaxed space-y-4 text-left md:text-center">
+                                        <p>My Dearest,</p>
+                                        <p>On this special day, I just want to remind you how incredibly amazing you are.</p>
+                                        <p>May your year be filled with as much joy, laughter, and magic as you bring into the world just by being you.</p>
+                                        <p>Wishing you all the love and happiness you deserve.</p>
+                                        <p className="font-handwriting text-3xl md:text-4xl text-secondary mt-6 text-center">Have a blast! 🎉✨</p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
-        </section >
+        </section>
     );
 }
