@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { useEffect, useState } from "react";
 import { FloatingHearts } from "./FloatingHearts";
 
 // 📸 CONFIGURATION: Add your photo URLs here!

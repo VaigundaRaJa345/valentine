@@ -5,10 +5,24 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { X, Heart, Gift } from "lucide-react";
+import { isBeforeBirthday } from "@/lib/birthday";
+import { useSearchParams } from "next/navigation";
 
 export function Confession() {
+    const searchParams = useSearchParams();
+    const isTestMode = searchParams.get("test") === "bday";
     const [activeLetter, setActiveLetter] = useState<"confession" | "birthday" | null>(null);
     const [topLetter, setTopLetter] = useState<"confession" | "birthday">("confession");
+    const [showLockMessage, setShowLockMessage] = useState(false);
+
+    const handleBirthdayClick = () => {
+        if (isBeforeBirthday(isTestMode)) {
+            setShowLockMessage(true);
+            setTimeout(() => setShowLockMessage(false), 3000);
+            return;
+        }
+        setActiveLetter("birthday");
+    };
 
     useEffect(() => {
         if (activeLetter !== null) return;
@@ -44,7 +58,7 @@ export function Confession() {
                             whileTap={{ scale: 0.95 }}
                             transition={{ duration: 0.6, ease: "easeInOut" }}
                             className="absolute cursor-pointer group flex flex-col items-center transition-all duration-300 transform-style-3d"
-                            onClick={() => setActiveLetter("birthday")}
+                            onClick={handleBirthdayClick}
                         >
                             <div className="w-64 h-44 md:w-72 md:h-48 bg-[#f4e4bc] shadow-xl relative flex items-center justify-center rounded-sm border border-[#d4c5a5]">
                                 {/* Paper Texture */}
@@ -169,6 +183,20 @@ export function Confession() {
                                 </div>
                             )}
                         </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Lock Message Toast */}
+            <AnimatePresence>
+                {showLockMessage && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[100] bg-primary/90 text-white px-6 py-3 rounded-full shadow-2xl backdrop-blur-md border border-white/20 font-serif italic tracking-wide"
+                    >
+                        Wait till your bday! 💖
                     </motion.div>
                 )}
             </AnimatePresence>
