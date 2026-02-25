@@ -9,19 +9,21 @@ export function BirthdayEffect() {
     const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
-        // Party paper effect (shapes like rectangles)
-        const scalar = 2;
+        // Party paper effect (shapes like rectangles, triangles, circles)
+        const scalar = 2.5;
         const triangle = confetti.shapeFromPath({ path: 'M0 10 L5 0 L10 10z' });
         const square = confetti.shapeFromPath({ path: 'M0 0 L10 0 L10 10 L0 10z' });
+        const colors = ['#885A89', '#B08D55', '#D8BFD8', '#f4e4bc', '#ff7eb9', '#7afcff', '#feff9c'];
 
         const duration = 15 * 1000;
         const animationEnd = Date.now() + duration;
         const defaults = {
-            startVelocity: 30,
+            startVelocity: 35,
             spread: 360,
-            ticks: 60,
-            zIndex: 0,
+            ticks: 80,
+            zIndex: 100,
             shapes: [triangle, square],
+            colors,
             scalar
         };
 
