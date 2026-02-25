@@ -18,11 +18,17 @@ export function WelcomePopup({ onComplete }: WelcomePopupProps) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed inset-0 z-[100] flex items-center justify-center bg-[#2c1810]/90 backdrop-blur-md p-4"
+                    className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md p-4"
                 >
                     <div
-                        className="relative max-w-lg w-full bg-[#f4e4bc] p-8 md:p-12 rounded-sm shadow-[20px_20px_0px_rgba(136,90,137,0.3)] text-center border border-[#885A89]/20"
+                        className="relative max-w-lg w-full bg-[#f4e4bc]/60 backdrop-blur-xl p-8 md:p-12 rounded-2xl shadow-2xl text-center border border-white/30 overflow-hidden"
+                        style={{
+                            boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.2)"
+                        }}
                     >
+                        {/* Glossy Reflection shine */}
+                        <div className="absolute -top-[100%] -left-[100%] w-[300%] h-[300%] bg-gradient-to-br from-white/10 via-transparent to-transparent rotate-12 pointer-events-none" />
+
                         {/* Subtle Paper Texture Overlay */}
                         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-20 mix-blend-multiply pointer-events-none" />
 

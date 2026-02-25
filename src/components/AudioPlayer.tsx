@@ -4,8 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX, SkipForward, ListMusic, BookOpen } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Diary } from "./Diary";
+import { useSearchParams } from "next/navigation";
+import { isBirthdayOrAfter } from "@/lib/birthday";
 
 const PLAYLIST = [
+    { title: "Paalam", src: "/audio/Paalam.mp3", caption: "Waiting for you." },
     { title: "Ordinary", src: "/audio/ordinary.mp3", caption: "Because with you, nothing is ordinary." },
     { title: "Theethiriyaai", src: "/audio/theethiriyaai.mp3", caption: "This is how i fell for you in 7th STD." },
     { title: "Nallaru Po", src: "/audio/nallaru_po.mp3", caption: "Then, Master the art of \"Watching you from the far\".   " },
@@ -13,6 +16,9 @@ const PLAYLIST = [
 ];
 
 export function AudioPlayer() {
+    const searchParams = useSearchParams();
+    const isTestMode = searchParams.get("test") === "bday";
+    const isBirthday = isBirthdayOrAfter(isTestMode);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
     const [isPlaylistOpen, setIsPlaylistOpen] = useState(false);
@@ -20,9 +26,17 @@ export function AudioPlayer() {
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
-        // Randomize start track
-        const randomIndex = Math.floor(Math.random() * PLAYLIST.length);
-        setCurrentTrackIndex(randomIndex);
+        // Randomize start track, but if birthday, pick first track (Paalam)
+        let initialIndex = 0;
+        if (isBirthday) {
+            initialIndex = 0;
+        } else {
+            // Random from index 1 onwards to avoid starting with Paalam if not birthday
+            initialIndex = Math.floor(Math.random() * (PLAYLIST.length - 1)) + 1;
+        }
+
+        setCurrentTrackIndex(initialIndex);
+        const randomIndex = initialIndex;
 
         // Initialize audio with random track
         const audio = new Audio(PLAYLIST[randomIndex].src);
