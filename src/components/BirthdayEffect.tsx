@@ -38,7 +38,7 @@ export function BirthdayEffect() {
                 return clearInterval(interval);
             }
 
-            const particleCount = 25 * (timeLeft / duration); // Reduced from 50
+            const particleCount = 15 * (timeLeft / duration); // Reduced from 25
             confetti({
                 ...defaults,
                 particleCount,
@@ -49,7 +49,7 @@ export function BirthdayEffect() {
                 particleCount,
                 origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
             });
-        }, 500); // Increased from 250 for less frequent bursts
+        }, 800); // Increased from 500 for even lighter effect
 
         // Auto-close overlay text after 3 seconds
         const closeTimer = setTimeout(() => {
