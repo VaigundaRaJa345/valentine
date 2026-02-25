@@ -21,13 +21,16 @@ export function WelcomePopup({ onComplete }: WelcomePopupProps) {
                     className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4"
                 >
                     <div
-                        className="relative max-w-lg w-full bg-[#f4e4bc] p-8 md:p-12 rounded-3xl shadow-2xl text-center border-4 border-[#7c525f]/20"
+                        className="relative max-w-lg w-full bg-white/40 backdrop-blur-xl p-8 md:p-12 rounded-3xl shadow-2xl text-center border border-white/40 overflow-hidden"
                         style={{
-                            boxShadow: "0 0 40px rgba(0,0,0,0.2), inset 0 0 40px rgba(0,0,0,0.05)"
+                            boxShadow: "0 8px 32px 0 rgba(136, 90, 137, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.4)"
                         }}
                     >
-                        {/* Paper Texture Overlay */}
-                        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-50 mix-blend-multiply pointer-events-none rounded-3xl" />
+                        {/* Glossy Refraction Effect */}
+                        <div className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-gradient-to-br from-white/20 via-transparent to-transparent rotate-45 pointer-events-none" />
+
+                        {/* Subtle Paper Texture Overlay */}
+                        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-10 mix-blend-multiply pointer-events-none rounded-3xl" />
 
                         <div className="relative z-10 space-y-8">
 

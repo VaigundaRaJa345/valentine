@@ -27,8 +27,6 @@ function HomeContent() {
           {isBirthday && <BirthdayEffect />}
           <AudioPlayer />
 
-          {!isBirthday && <CountdownTimer isTestMode={isTestMode} />}
-
           <Hero />
 
           <div className="relative z-10">

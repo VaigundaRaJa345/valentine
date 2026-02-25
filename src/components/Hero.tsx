@@ -3,6 +3,9 @@
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { FloatingHearts } from "./FloatingHearts";
+import { CountdownTimer } from "./CountdownTimer";
+import { useSearchParams } from "next/navigation";
+import { isBirthdayOrAfter } from "@/lib/birthday";
 
 // 📸 CONFIGURATION: Add your photo URLs here!
 // 1. Place your photos in the 'public/photos' folder (create it if it doesn't exist).
@@ -55,6 +58,10 @@ const photos = [
 ];
 
 export function Hero() {
+    const searchParams = useSearchParams();
+    const isTestMode = searchParams.get("test") === "bday";
+    const isBirthday = isBirthdayOrAfter(isTestMode);
+
     return (
         <section className="h-screen w-full flex flex-col items-center justify-center relative overflow-hidden bg-transparent">
             {/* Collage Elements - Configurable Photos */}
@@ -83,6 +90,13 @@ export function Hero() {
             ))}
 
             <div className="z-10 text-center px-4 relative">
+                {/* Countdown Timer - Taped and styled */}
+                {!isBirthday && (
+                    <div className="mb-4">
+                        <CountdownTimer isTestMode={isTestMode} />
+                    </div>
+                )}
+
                 {/* Decorative flourish top */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
